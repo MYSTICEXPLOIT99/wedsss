@@ -1,7 +1,10 @@
 // core.js — ตัวช่วย, ข้อมูล/สถานะร้าน, session, ธีม, โครงหน้า (header/nav), modal/toast
 const $=i=>document.getElementById(i),E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const H=s=>{let h=5381;for(const c of s)h=(h*33^c.charCodeAt(0))>>>0;return h.toString(36)};
-const pad=n=>String(n).padStart(2,'0'),ld=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()),now=()=>ld(new Date())+' '+pad(new Date().getHours())+':'+pad(new Date().getMinutes());
+const pad=n=>String(n).padStart(2,'0');
+const bkkP=(d=new Date())=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Bangkok',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(d).reduce((o,x)=>(o[x.type]=x.value,o),{});
+const ld=d=>{const p=bkkP(d);return p.year+'-'+p.month+'-'+p.day};
+const now=()=>{const p=bkkP();return p.year+'-'+p.month+'-'+p.day+' '+p.hour+':'+p.minute};
 const D={cfg:{name:'DEXTER STORE',slogan:'ศูนย์รวมไอดีเกมและโค้ดดิจิทัล ส่งอัตโนมัติ 24 ชม.',logo:'',banner:'',banners:[],c1:'#06b6d4',c2:'#6366f1',bg:'#0b0f17',tx:'',topup:1,prof:1,hTop:1,hBuy:1,pay:'PromptPay: 000-000-0000 (ชื่อบัญชี...)',twInfo:'',twPhone:'',qrimg:'',pqOn:1,ptOn:1,pcOn:1,min:10,auto:0,apiUrl:'',pw:H('admin1234')},
 cats:[{id:1,name:'ไอดีเกม',img:''},{id:2,name:'เงินในเกม',img:''},{id:3,name:'บัตรเติมเงิน',img:''}],ranks:[{id:1,name:'สมาชิก'},{id:2,name:'VIP'}],users:[],adm:{id:1,name:'admin',bal:0},
 prods:[{id:1,name:'Valorant Points 1,000 VP',cat:2,price:300,items:Array.from({length:12},(_,i)=>'VALO-1000VP-'+String(i+1).padStart(3,'0')),img:''},{id:2,name:'ไอดีเกม ตัวอย่าง',cat:1,price:350,items:Array.from({length:4},(_,i)=>'ID-DEMO|PASS-'+String(i+1).padStart(3,'0')),img:''},{id:3,name:'Steam Wallet 500฿',cat:3,price:500,items:Array.from({length:15},(_,i)=>'STEAM-500-'+String(i+1).padStart(3,'0')),img:''}],tx:[],codes:[]};
